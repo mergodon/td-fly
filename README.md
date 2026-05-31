@@ -2,14 +2,14 @@
 
 The lean rebuild of td-flow. Three things that earned their keep — `close`, `mailbox`, and the cross-repo GitHub-issues protocol — shipped as a native Claude Code plugin. Everything else from td-flow was cut.
 
-This folder is **both the plugin and its own marketplace** (the `.claude-plugin/marketplace.json` points `source: "."` at itself), so it installs from one path with no extra repo.
+This folder is **both the plugin and its own marketplace** — `.claude-plugin/marketplace.json` lists the plugin and points its `source` at the `mergodon/td-fly` github repo, so it installs with no extra repo.
 
 ## Test it locally
 
 ```
-/plugin marketplace add ./td-fly      # from inside ~/projects/planing
+/plugin marketplace add ~/projects/td-fly   # register this folder as a marketplace
 /plugin install td-fly@td-fly
-/reload-plugins                        # after editing a command
+/reload-plugins                             # after editing a command
 ```
 
 Commands land namespaced under the plugin: `/td-fly:close`.
