@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "td-fly",
-      "source": ".",
+      "source": { "source": "github", "repo": "mergodon/td-fly" },
       "description": "Lean work rhythm: close + mailbox + cross-repo GitHub issues."
     }
   ]
