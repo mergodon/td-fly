@@ -1,0 +1,13 @@
+{
+  "name": "td-fly",
+  "owner": {
+    "name": "mergodon"
+  },
+  "plugins": [
+    {
+      "name": "td-fly",
+      "source": ".",
+      "description": "Lean work rhythm: close + mailbox + cross-repo GitHub issues."
+    }
+  ]
+}
