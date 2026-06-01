@@ -8,7 +8,7 @@ yours to decide per repo.
 ## Rhythm
 Work conversationally. No mandated doc scaffold — durable facts go to memory, leftover
 TODOs go to GitHub issues. Two commands carry the rhythm:
-- `/td-fly:close` — wrap a session: remember facts → park TODOs to issues → commit → push.
+- `/td-fly:close` — wrap a session: remember facts → fresh-eyes reality check → park TODOs to issues → commit → push.
 - `/td-fly:mailbox` — cross-repo check: issues filed *into* this repo + issues this repo
   filed *into others*, as one digest.
 

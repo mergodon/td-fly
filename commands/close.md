@@ -1,5 +1,5 @@
 ---
-description: Wrap a work session or project — capture durable facts to memory, park leftover TODOs to GitHub issues, commit, and push. The lean close ceremony.
+description: Wrap a work session or project — capture durable facts to memory, run a fresh-eyes reality check for discrepancies, park leftover TODOs to GitHub issues, commit, and push. The lean close ceremony.
 ---
 
 You are closing a work session. Keep it lean — this is a checkpoint, not a ceremony. Do these in order; skip silently what doesn't apply.
@@ -7,13 +7,16 @@ You are closing a work session. Keep it lean — this is a checkpoint, not a cer
 # 1. Remember
 Scan the session for durable facts worth keeping (decisions, preferences, non-obvious technical findings, anything the user said to remember). Write them to the built-in memory store — update existing memory files rather than duplicating. Nothing new learned → skip.
 
-# 2. Park leftovers
-Gather any unfinished, out-of-scope items raised this session. Present them as ONE numbered digest, each with a suggested action (`file as Bug / Task / Idea` / `drop`). Take the user's decisions in one reply, then file the chosen ones as GitHub issues in this repo (`gh api graphql` with the right Issue Type; body opens `**From:** <project-name>`). Nothing to park → skip.
+# 2. Reality check (fresh eyes)
+Only if this session changed docs or commands. Spawn ONE subagent with **no prior context** to read this repo's docs + command files and flag discrepancies — claims that don't match what the commands actually do, dead references, drift between files, stale status/version, leftover scaffold. Ask it for a SHORT prioritized list (HIGH/MED/LOW), not new documentation — the goal is a fast "where are we", not a full audit. Then: fix the trivial/reversible mismatches inline yourself; fold anything bigger into the Park step below. Clean bill → say so in one line and move on. Don't re-flag something already parked or deliberately accepted as lean.
 
-# 3. Commit & push
+# 3. Park leftovers
+Gather any unfinished, out-of-scope items raised this session. Present them as ONE numbered digest, each with a suggested action (`file as Bug / Task / Idea` / `drop`). Take the user's decisions in one reply, then file the chosen ones as GitHub issues in this repo (`gh api graphql` with the right Issue Type; body opens `**From:** <project-name>`, where `<project-name>` is this repo's short name from `gh repo view --json name` — same marker `/td-fly:mailbox` filters on). Nothing to park → skip.
+
+# 4. Commit & push
 - `git status --short` — if there are uncommitted changes, ask: commit / stash / discard. Wait for the answer.
 - Commit shipped work with a conventional message (`feat:` / `fix:` / `chore:` / `docs:`).
 - Push to `origin/main`. No PRs. If push is rejected, surface the error and stop.
 
-# 4. Report
-One line: what shipped, what was parked, what's remembered.
+# 5. Report
+One line: what shipped, what the reality check found, what was parked, what's remembered.
