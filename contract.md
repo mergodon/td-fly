@@ -5,9 +5,23 @@ repo points at it — edit once, it propagates everywhere. Keep it short. This i
 *interface* (how repos rendezvous), not a per-project rulebook — project structure is
 yours to decide per repo.
 
+## What gets kept, and where
+Work conversationally. No heavy doc scaffold — but keeping a record of the project's
+state is **mandatory, not optional**. Sort what's worth keeping by *kind*:
+- **Load-bearing project knowledge** — invariants, gotchas, build/deploy discipline,
+  architecture, design decisions, anything that constrains the code — lives **in the repo
+  as a doc**, versioned next to the code it governs (extend an existing `docs/` file or
+  `CLAUDE.md`). It must survive without me and be visible to anyone who clones the repo.
+  Lean = one home, not td-flow's five-file scaffold — but *some* durable doc, always.
+- **Memory** is only for *how we work*: preferences, working-style feedback, cross-session
+  continuity. **Never put code-governing knowledge in memory** — it's private to one
+  machine, unversioned, and recalled by chance. That is data loss waiting to happen.
+- Leftover TODOs → GitHub issues.
+
+The test: *does it constrain the code?* → repo doc. *Is it about how we work?* → memory.
+
 ## Rhythm
-Work conversationally. No mandated doc scaffold — durable facts go to memory, leftover
-TODOs go to GitHub issues. Two commands carry the rhythm:
+Two commands carry the rhythm:
 - `/td-fly:close` — wrap a session: remember facts → fresh-eyes reality check → park TODOs to issues → commit → push.
 - `/td-fly:mailbox` — cross-repo check: issues filed *into* this repo + issues this repo
   filed *into others*, as one digest.

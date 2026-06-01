@@ -4,8 +4,12 @@ description: Wrap a work session or project — capture durable facts to memory,
 
 You are closing a work session. Keep it lean — this is a checkpoint, not a ceremony. Do these in order; skip silently what doesn't apply.
 
-# 1. Remember
-Scan the session for durable facts worth keeping (decisions, preferences, non-obvious technical findings, anything the user said to remember). Write them to the built-in memory store — update existing memory files rather than duplicating. Nothing new learned → skip.
+# 1. Capture what's worth keeping
+Sort by *kind* — two homes, and the split matters:
+- **Load-bearing project knowledge** surfaced this session — invariants, gotchas, build/deploy discipline, architecture or design decisions, unresolved bugs, anything that constrains the code → write it to a **repo doc** next to the code (extend an existing `docs/` file or `CLAUDE.md`; don't spawn a scaffold). Versioned and visible to anyone who clones the repo. **Never memory** — that would bury code-governing facts in a private, unversioned store recalled by chance.
+- **Working-style facts** — user preferences, how-we-work feedback, cross-session context → the built-in memory store; update existing files, don't duplicate.
+
+Unsure which? *Constrains the code* → repo doc. *About how we work* → memory. Nothing new of either kind → skip.
 
 # 2. Reality check (fresh eyes)
 Only if this session changed docs or commands. Spawn ONE subagent with **no prior context** to read this repo's docs + command files and flag discrepancies — claims that don't match what the commands actually do, dead references, drift between files, stale status/version, leftover scaffold. Ask it for a SHORT prioritized list (HIGH/MED/LOW), not new documentation — the goal is a fast "where are we", not a full audit. Then: fix the trivial/reversible mismatches inline yourself; fold anything bigger into the Park step below. Clean bill → say so in one line and move on. Don't re-flag something already parked or deliberately accepted as lean.
@@ -19,4 +23,4 @@ Gather any unfinished, out-of-scope items raised this session. **Consolidate** r
 - Push to `origin/main`. No PRs. If push is rejected, surface the error and stop.
 
 # 5. Report
-One line: what shipped, what the reality check found, what was parked, what's remembered.
+One line: what shipped, what the reality check found, what was parked, what was documented (repo) vs remembered (memory).
