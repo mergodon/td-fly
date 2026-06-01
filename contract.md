@@ -8,11 +8,12 @@ yours to decide per repo.
 ## What gets kept, and where
 Work conversationally. No heavy doc scaffold — but keeping a record of the project's
 state is **mandatory, not optional**. Sort what's worth keeping by *kind*:
-- **Load-bearing project knowledge** — invariants, gotchas, build/deploy discipline,
-  architecture, design decisions, anything that constrains the code — lives **in the repo
-  as a doc**, versioned next to the code it governs (extend an existing `docs/` file or
-  `CLAUDE.md`). It must survive without me and be visible to anyone who clones the repo.
-  Lean = one home, not td-flow's five-file scaffold — but *some* durable doc, always.
+- **Core project knowledge** — the heart-of-the-system facts that constrain the code:
+  load-bearing invariants, the gotchas that bite, deploy discipline, key design decisions,
+  open bugs. These live **in the repo as a doc**, versioned next to the code (extend an
+  existing `docs/` file or `CLAUDE.md`). Capture only the core — *not every finding.* The
+  transcripts and git history are the archive; we can always go back. Lean: one home, a
+  short curated record, never memory.
 - **Memory** is only for *how we work*: preferences, working-style feedback, cross-session
   continuity. **Never put code-governing knowledge in memory** — it's private to one
   machine, unversioned, and recalled by chance. That is data loss waiting to happen.

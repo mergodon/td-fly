@@ -6,7 +6,7 @@ You are closing a work session. Keep it lean — this is a checkpoint, not a cer
 
 # 1. Capture what's worth keeping
 Sort by *kind* — two homes, and the split matters:
-- **Load-bearing project knowledge** surfaced this session — invariants, gotchas, build/deploy discipline, architecture or design decisions, unresolved bugs, anything that constrains the code → write it to a **repo doc** next to the code (extend an existing `docs/` file or `CLAUDE.md`; don't spawn a scaffold). Versioned and visible to anyone who clones the repo. **Never memory** — that would bury code-governing facts in a private, unversioned store recalled by chance.
+- **Core project knowledge** surfaced this session — only the heart-of-the-system facts that constrain the code: load-bearing invariants, biting gotchas, deploy discipline, key decisions, open bugs → write it to a **repo doc** next to the code (extend an existing `docs/` file or `CLAUDE.md`; don't spawn a scaffold). Capture only the core, not every finding — the transcripts and git are the archive. Versioned, visible to anyone who clones the repo. **Never memory.**
 - **Working-style facts** — user preferences, how-we-work feedback, cross-session context → the built-in memory store; update existing files, don't duplicate.
 
 Unsure which? *Constrains the code* → repo doc. *About how we work* → memory. Nothing new of either kind → skip.
