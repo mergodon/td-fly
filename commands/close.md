@@ -1,5 +1,5 @@
 ---
-description: Wrap a work session or project — capture durable facts to memory, run a fresh-eyes reality check for discrepancies, park leftover TODOs to GitHub issues, commit, and push. The lean close ceremony.
+description: Wrap a work session or project — capture core knowledge to repo docs (working-style to memory), run a fresh-eyes reality check for discrepancies, park leftover TODOs to GitHub issues, commit, and push. The lean close ceremony.
 ---
 
 You are closing a work session. Keep it lean — this is a checkpoint, not a ceremony. Do these in order; skip silently what doesn't apply.
