@@ -11,7 +11,7 @@ This folder is **both the plugin and its own marketplace** — `.claude-plugin/m
 /plugin install td-fly@td-fly
 ```
 
-Commands land namespaced under the plugin: `/td-fly:close`, `/td-fly:mailbox`.
+Commands land namespaced under the plugin: `/td-fly:close`, `/td-fly:mailbox`, `/td-fly:flow-down`.
 
 Because the marketplace source is the GitHub repo (not this local folder), iterating on a command is: edit → commit → push → `/plugin marketplace update td-fly` → `/reload-plugins`. Local-only edits won't show until pushed.
 
@@ -31,4 +31,5 @@ The symlink points back into this repo, so a `git pull` here updates the contrac
 - [x] `/td-fly:close` (lean close ceremony)
 - [x] `/td-fly:mailbox` (cross-repo issue digest — slimmed from td-flow's bulky original)
 - [x] the `@import` contract / rendezvous convention (`contract.md` + `install.sh`)
+- [x] `/td-fly:flow-down` (one-way migration: retire a project's td-flow scaffold)
 - [ ] agents/workflows playbook (`/ship-watch` first)
