@@ -29,6 +29,6 @@ The symlink points back into this repo, so a `git pull` here updates the contrac
 
 - [x] plugin + self-marketplace manifest
 - [x] `/td-fly:close` (lean close ceremony)
-- [x] `/td-fly:mailbox` (cross-repo issue digest — slimmed from td-flow's 284 lines)
+- [x] `/td-fly:mailbox` (cross-repo issue digest — slimmed from td-flow's bulky original)
 - [x] the `@import` contract / rendezvous convention (`contract.md` + `install.sh`)
 - [ ] agents/workflows playbook (`/ship-watch` first)

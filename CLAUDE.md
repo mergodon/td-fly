@@ -8,4 +8,4 @@ The `## Cross-repo` section below is an empty template — td-fly files into no 
 yet; add a slug there if that changes. See README.md for the build status.
 
 ## Cross-repo
-<!-- one repo slug per line below; this list scopes /td-fly:mailbox outbound -->
+<!-- one owner/name slug per line below; this list scopes /td-fly:mailbox outbound -->

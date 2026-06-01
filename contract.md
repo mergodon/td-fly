@@ -23,8 +23,8 @@ another repo (or reads ones filed into it):
 - **Declare connected repos** in this project's own `CLAUDE.md` under a `## Cross-repo`
   heading — one `owner/name` slug per line. That list *is* the scope of `/td-fly:mailbox`
   outbound. Not listed = not seen, by design; declaring a new one is a one-line edit.
-- **Every cross-repo issue body opens with** `**From:** <repo-name>` — the canonical
+- **Every cross-repo issue body opens with** `**From:** <project-name>` — the canonical
   sender marker, the only thing that identifies a filing as ours.
-- **Sign every cross-repo comment and closure** with `— <repo-name>`. Never address
+- **Sign every cross-repo comment and closure** with `— <project-name>`. Never address
   GitHub usernames in cross-repo prose.
-- `<repo-name>` = this repo's short name (the `name` in `owner/name`).
+- `<project-name>` = this repo's short name (the `name` in `owner/name`).
