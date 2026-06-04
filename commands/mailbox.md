@@ -7,6 +7,7 @@ You are running the mailbox check: gather cross-repo work both directions, show 
 # 1. Setup
 - `gh repo view --json name,owner` → hold `<owner>/<name>`. If it fails: abort, "No GitHub remote or `gh` not authenticated."
 - `<project-name>` = `<name>` (the repo's short name). This signs comments and is the `**From:**` marker to filter on.
+- `git branch --show-current` → hold `<branch>`. **Mailbox is branch-scoped:** it shows only filings tagged for `<branch>`. A marker's branch is the part after `@` in `**From:** name@branch`; absent = `main`. Empty output (detached HEAD) → skip branch filtering and note `branch: detached — not filtered` in the digest header.
 
 # 2. Inbound — open issues in this repo
 Issue Type isn't exposed by `gh issue list`, so fetch via GraphQL (no preview header needed):
@@ -19,7 +20,8 @@ gh api graphql -f query='query($owner:String!,$name:String!){
   }
 }' -F owner=<owner> -F name=<name>
 ```
-For each, grab related commits to judge "looks resolved": `git log --grep="#<N>" --oneline -5`.
+**Branch filter:** parse each issue's `**From:** name@branch` marker. Keep an issue if it has NO `**From:**` marker (hand-filed — never hide it) OR its marker branch == `<branch>` (marker branch absent = `main`). Set the rest aside as off-branch (counted, not shown).
+For each kept issue, grab related commits to judge "looks resolved": `git log --grep="#<N>" --oneline -5`.
 
 # 3. Outbound — issues this repo filed into others
 Read this project's `CLAUDE.md` for a `## Cross-repo` heading and parse the `owner/name` slugs under it.
@@ -36,7 +38,7 @@ gh api graphql -f query='query($q: String!) {
   }
 }' -F q='repo:<slug1> repo:<slug2> "<project-name>" type:issue state:open'
 ```
-Keep only issues whose body starts with `**From:** <project-name>`. That set is outbound. (Search index lags new issues a few seconds — a just-filed one may show next run.)
+Keep only issues whose body starts with `**From:** <project-name>` (optionally `@<branch>`) AND whose marker branch == `<branch>` (marker branch absent = `main`). That branch-matched set is outbound; count the rest as off-branch. (Search index lags new issues a few seconds — a just-filed one may show next run.)
 
 # 4. Digest — one numbered list
 Inbound bucketed by Issue Type (Epic, Bug, Task, Idea, untyped), newest first within each. Outbound bucketed by who holds the ball. Number continuously across both so "close 3" is unambiguous.
@@ -57,26 +59,28 @@ Outbound:
 - ball with them (last comment ours) → "leave, check back later?"
 
 ```
-Mailbox: <I> inbound + <O> outbound
+Mailbox: <I> inbound + <O> outbound   ·   branch: <branch>
 
-📥 Inbound (this repo)
+📥 Inbound (branch: <branch>)
   1. #<N>  <Type>  <title>   from <From-marker or "unmarked">   <age>
          → <recommendation>
 
-📤 Outbound (filed into: <slugs>)
+📤 Outbound (filed into: <slugs> · branch: <branch>)
   2. <repo>#<N>  <Type>  <title>   <ball-state>   <age>
          → <recommendation>
 
 Decide in one line — e.g. "close 1, ping 2, start 3, skip rest". `show N` expands an item.
 ```
 
-Both empty → print `Mailbox empty. ✓  (inbound: none; outbound scope: <slugs or "none declared">)` and exit.
+If branch filtering set anything aside, end the digest with one line: `(off-branch items hidden — checkout that branch to see them)`. No per-item count; just the notice. Omit it when nothing was hidden.
+
+Both kept-lists empty → print `Mailbox empty for branch <branch>. ✓  (inbound: none; outbound scope: <slugs or "none declared">)` and exit — but if items existed yet all were off-branch, say `Mailbox empty for branch <branch> — all items are on other branches. ✓` instead.
 
 # 5. One decision point
 Wait for the single reply. Actions — inbound: `start` / `comment` / `close` / `promote` (Idea→Task) / `skip`; outbound: `comment` / `ping` / `withdraw` / `skip`. `show N` expands one item then the digest stands again. Anything unnamed = skip.
 
 # 6. Execute the batch
-Draft any needed text, each signed `— <project-name>`. Every cross-repo filing/closure keeps the `**From:** <project-name>` / sign-off convention.
+Draft any needed text, each signed `— <project-name>`. Every cross-repo filing/closure keeps the `**From:** <project-name>@<branch>` / sign-off convention.
 
 - **Reversible actions just run — no second confirm round.** Comments and closes-with-comment are reversible (`gh issue comment --edit`, `gh issue reopen`); post them and show the text in the summary.
 - **Confirm once only when** the directive is bare *and* you're inventing material content the user hasn't seen, OR the action is destructive (withdrawing/reopening another repo's issue). Show those drafts together, "post all? (yes / edit N / drop N)".
@@ -95,6 +99,7 @@ Commands:
 # Rules
 - One digest, one decision point, one batch. No issue-by-issue walking. This command covers both directions — don't suggest a second one.
 - Outbound scope is the `## Cross-repo` list in CLAUDE.md. Widen by editing that, not by bypassing it.
+- Branch-scoped: the view is filtered to your current branch via the `@<branch>` marker. Coordinate by keeping branch names aligned across repos. Unmarked (hand-filed) inbound issues are never branch-hidden.
 - Epics are reported, never `start`ed — their open children are the work.
 - Don't re-nudge the same stale item every run; the recommendation is a once-in-a-while reminder, not a recurring prompt.
 - If GraphQL errors (rate limit/auth), surface it and fall back to a degraded inbound-only listing.

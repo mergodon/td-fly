@@ -38,8 +38,14 @@ another repo (or reads ones filed into it):
 - **Declare connected repos** in this project's own `CLAUDE.md` under a `## Cross-repo`
   heading — one `owner/name` slug per line. That list *is* the scope of `/td-fly:mailbox`
   outbound. Not listed = not seen, by design; declaring a new one is a one-line edit.
-- **Every cross-repo issue body opens with** `**From:** <project-name>` — the canonical
-  sender marker, the only thing that identifies a filing as ours.
+- **Every cross-repo issue body opens with** `**From:** <project-name>@<branch>` — the
+  canonical sender marker: who filed it and from which branch. `<branch>` is the one the
+  filing repo was on (`git branch --show-current`) — always stamped, `@main` included.
+  A marker with no `@` part (legacy or hand-filed) reads as `main`.
+- **Branch-scoped rendezvous.** `/td-fly:mailbox` filters to the branch you're on — it
+  shows only filings whose `@<branch>` matches your current branch. Coordinate by keeping
+  branch names aligned across the repos that talk: `main` ↔ `main`, `feature-x` ↔
+  `feature-x`. Unmarked (hand-filed) issues are never branch-hidden.
 - **Sign every cross-repo comment and closure** with `— <project-name>`. Never address
   GitHub usernames in cross-repo prose.
 - `<project-name>` = this repo's short name (the `name` in `owner/name`).
