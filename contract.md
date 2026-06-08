@@ -23,7 +23,7 @@ The test: *does it constrain the code?* → repo doc. *Is it about how we work?*
 
 ## Rhythm
 Two commands carry the rhythm:
-- `/td-fly:close` — wrap a session: remember facts → fresh-eyes reality check → park TODOs to issues → commit → push.
+- `/td-fly:close` — wrap a session: remember facts → fresh-eyes sweep (docs + memory) → park TODOs to issues → commit → push.
 - `/td-fly:mailbox` — cross-repo check: issues filed *into* this repo + issues this repo
   filed *into others*, as one digest.
 
