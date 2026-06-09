@@ -10,6 +10,7 @@ You are migrating this project from td-flow to td-fly: retire the old scaffold w
 - **Contract import** — find a `@~/.claude/td-flow-contract.md` line in `CLAUDE.md`. Note every OTHER `@import` line too (e.g. `@~/.claude/td-rider-contract.md`) — those are NOT td-flow; never touch them.
 - **State dir(s)** — find **every** td-flow state dir present: `.td-flow/` and the legacy `.td/` (some repos carry **both** — handle all of them, never just one). Inventory everything in each: `PROJECT.md`, `STATE.md`, `WORKWAY.md`, `BACKLOG.md`, `work/`, `health.sh`, `voice-guide.md`, `frameworks/`, and anything else.
 - **Existing `docs/`** — does the repo already have a `docs/` dir? That's the natural home for migrated knowledge. If not, plan a single `docs/PROJECT-NOTES.md`.
+- **Stray git hook** — check `.git/hooks/pre-commit`; td-flow's installer drops one there (it references `.td*/WORKWAY.md` for the Test command). It's **untracked**, so it survives migration unless explicitly removed.
 - **Project-real CLAUDE.md content** — anything below the import lines that's this project's own writing. It stays.
 - `gh repo view --json name,owner` for the slug + `<project-name>`; `git status --short` to note a dirty tree.
 - No `@td-flow-contract` import AND no state dir → "Not a td-flow project — nothing to migrate." Stop.
@@ -39,7 +40,7 @@ MIGRATE  BACKLOG → N issues: <one line each>
          Cross-repo → CLAUDE.md ## Cross-repo: <slugs, or "none found">
 SURFACE  in-flight: <piece + recommendation, or "none — idle">
 KEEP     health.sh → <dest>; <other real docs → dest>
-DROP     scaffold only: <list the boilerplate files going away>
+DROP     scaffold only: <list the boilerplate files going away>; td-flow .git/hooks/pre-commit if present
 TEARDOWN <if LAST repo: rm ~/.claude/td-flow-contract.md + N /td-flow-* command symlinks; leave ~/projects/td-flow/ on disk (orphaned, delete by hand)>
          <else: global install kept — N repos still on td-flow: <list>>
 
@@ -52,7 +53,7 @@ Proceed? (yes / adjust). Nothing changes until you say go.
 3. Write `## Cross-repo` into CLAUDE.md.
 4. Move keepers (`health.sh`, other docs).
 5. Swap the import line in CLAUDE.md.
-6. `git rm -r` **every** state dir found (`.td-flow/` and/or legacy `.td/`) — only after 1–5 succeed and the preserved docs are confirmed present. Leave no scaffold dir behind.
+6. `git rm -r` **every** state dir found (`.td-flow/` and/or legacy `.td/`) — only after 1–5 succeed and the preserved docs are confirmed present. Leave no scaffold dir behind. Then remove the td-flow git hook if present — `rm -f .git/hooks/pre-commit` when it's the td-flow one (untracked, so nothing else catches it).
 7. Commit `chore: migrate <project-name> from td-flow to td-fly`. Push only if the user asks or runs close.
 8. **Global teardown — ONLY when this is the last td-flow repo** (the last-one-out scan found zero others). After the migration commit: `rm ~/.claude/td-flow-contract.md` and the `~/.claude/commands/td-flow-*.md` symlinks. **Leave `~/projects/td-flow/` on disk** — report it as orphaned, yours to delete by hand. If any other repo still imports the contract, skip this entirely and report which remain.
 
