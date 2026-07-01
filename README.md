@@ -1,6 +1,6 @@
 # td-fly
 
-The lean rebuild of td-flow — two commands (`close`, `mailbox`) plus the cross-repo GitHub-issues protocol and the `@import` contract, shipped as a native Claude Code plugin. Everything else from td-flow was cut.
+A lean work rhythm — two commands (`close`, `mailbox`) plus the cross-repo GitHub-issues protocol and the `@import` contract, shipped as a native Claude Code plugin.
 
 This folder is **both the plugin and its own marketplace** — `.claude-plugin/marketplace.json` lists the plugin and points its `source` at the public `mergodon/td-fly` github repo, so it installs on any machine with no extra repo.
 
@@ -25,11 +25,10 @@ Because the marketplace source is the GitHub repo (not this local folder), itera
 
 The symlink points back into this repo, so a `git pull` here updates the contract in every project at once — zero drift. A project declares its cross-repo connections under a `## Cross-repo` heading in its own `CLAUDE.md`; that list scopes `/td-fly:mailbox` outbound.
 
-## Status: prototype
+## Status
 
 - [x] plugin + self-marketplace manifest
 - [x] `/td-fly:close` (lean close ceremony)
-- [x] `/td-fly:mailbox` (cross-repo issue digest — slimmed from td-flow's bulky original)
+- [x] `/td-fly:mailbox` (cross-repo issue digest)
 - [x] the `@import` contract / rendezvous convention (`contract.md` + `install.sh`)
-- [x] `flow-down` migration complete — whole fleet moved off td-flow, td-flow retired; the one-shot `flow-down` command was removed once its job was done
 - [ ] agents/workflows playbook (`/ship-watch` first)

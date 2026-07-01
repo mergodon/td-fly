@@ -1,6 +1,6 @@
 {
   "name": "td-fly",
-  "description": "Lean work rhythm: close + mailbox + cross-repo GitHub issues. The lean rebuild of td-flow.",
+  "description": "Lean work rhythm: close + mailbox + cross-repo GitHub issues.",
   "version": "0.9.0",
   "author": {
     "name": "mergodon"
