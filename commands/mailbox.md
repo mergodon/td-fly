@@ -72,12 +72,14 @@ Mailbox: <I> inbound + <O> outbound   ·   branch: <branch>
 Decide in one line — e.g. "close 1, ping 2, start 3, skip rest". `show N` expands an item.
 ```
 
+If **no item is actionable** (every recommendation is "leave open?" or a report-only Epic line), don't stage a decision point — close with `Nothing needs a call — all quiet. ✓` and stop. Only wait for a reply when at least one item invites an action.
+
 If branch filtering set anything aside, end the digest with one line: `(off-branch items hidden — checkout that branch to see them)`. No per-item count; just the notice. Omit it when nothing was hidden.
 
 Both kept-lists empty → print `Mailbox empty for branch <branch>. ✓  (inbound: none; outbound scope: <slugs or "none declared">)` and exit — but if items existed yet all were off-branch, say `Mailbox empty for branch <branch> — all items are on other branches. ✓` instead.
 
-# 5. One decision point
-Wait for the single reply. Actions — inbound: `start` / `comment` / `close` / `promote` (Idea→Task) / `skip`; outbound: `comment` / `ping` / `withdraw` / `skip`. `show N` expands one item then the digest stands again. Anything unnamed = skip.
+# 5. One decision point (only if something's actionable)
+When at least one item invites an action, wait for the single reply. Actions — inbound: `start` / `comment` / `close` / `promote` (Idea→Task) / `skip`; outbound: `comment` / `ping` / `withdraw` / `skip`. `show N` expands one item then the digest stands again. Anything unnamed = skip. If everything's quiet, you already exited at the end of §4 — don't ask.
 
 # 6. Execute the batch
 Draft any needed text, each signed `— <project-name>`. Every cross-repo filing/closure keeps the `**From:** <project-name>@<branch>` / sign-off convention.
