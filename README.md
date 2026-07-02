@@ -31,4 +31,5 @@ The symlink points back into this repo, so a `git pull` here updates the contrac
 - [x] `/td-fly:close` (lean close ceremony)
 - [x] `/td-fly:mailbox` (cross-repo issue digest)
 - [x] the `@import` contract / rendezvous convention (`contract.md` + `install.sh`)
-- [ ] agents/workflows playbook (`/ship-watch` first)
+
+td-fly is feature-complete and lean by design. The agents/workflows playbook (a parked backlog of future ideas) was retired to keep it that way; it lives in git history if ever revived.
