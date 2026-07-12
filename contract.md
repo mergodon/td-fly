@@ -1,9 +1,9 @@
-# td-fly — shared work contract
+# td-fly — shared work contract (reference)
 
-Imported into each project's `CLAUDE.md` via `@~/.claude/td-fly.md`. One file, every
-repo points at it — edit once, it propagates everywhere. Keep it short. This is the
-*interface* (how repos rendezvous), not a per-project rulebook — project structure is
-yours to decide per repo.
+The canonical write-up of the rhythm. **Not imported anywhere** — the `close` and
+`mailbox` commands carry their own copy of this protocol; this file is the human-readable
+reference. Keep it short. This is the *interface* (how repos rendezvous), not a
+per-project rulebook — project structure is yours to decide per repo.
 
 ## What gets kept, and where
 Work conversationally. No heavy doc scaffold — but keeping a record of the project's
