@@ -41,15 +41,15 @@ gh api graphql -f query='query($q: String!) {
 Keep only issues whose body starts with `**From:** <project-name>` (optionally `@<branch>`) AND whose marker branch == `<branch>` (marker branch absent = `main`). That branch-matched set is outbound; count the rest as off-branch. (Search index lags new issues a few seconds — a just-filed one may show next run.)
 
 # 4. Digest — one numbered list
-Inbound bucketed by Issue Type (Epic, Bug, Task, Idea, untyped), newest first within each. Outbound bucketed by who holds the ball. Number continuously across both so "close 3" is unambiguous.
+Inbound newest first, Epics last. Outbound bucketed by who holds the ball. Number continuously across both so "close 3" is unambiguous. Show the type as a label, but don't bucket by it — the type is wrong too often to organise a digest around (39% of agent filings arrive untyped).
 
-Recommendation per item (one line, first match wins):
+Recommendation per item (one line, first match wins). Keyed on **evidence, not type**:
 
 Inbound:
-- Bug/Task with a commit referencing `#<N>` that looks like a fix → "looks resolved — close?"
-- Epic → report-only: "planning surface — work its open children." Never nudge `start` on an Epic.
-- Idea untouched > 60d → "stale — close?"
-- Bug/Task, no referencing commits → "concrete piece — start, or leave?"
+- A commit referencing `#<N>` looks like a fix → "looks resolved — close?"
+- Epic → report-only: "planning surface — work its open children." Never nudge `start` on an Epic. (Epics are 1% of issues in 5 of 75 repos, but where the owner uses them they carry real sub-issues, so the guard earns its line.)
+- No referencing commits, concrete and actionable → "concrete piece — start, or leave?"
+- 60+ days, no comments, no referencing commits, nothing links to it → "stale — close?" Never on an owner-filed issue: no `**From:**` marker means they meant it.
 - else → "leave open?"
 
 Outbound:
@@ -79,7 +79,7 @@ If branch filtering set anything aside, end the digest with one line: `(off-bran
 Both kept-lists empty → print `Mailbox empty for branch <branch>. ✓  (inbound: none; outbound scope: <slugs or "none declared">)` and exit — but if items existed yet all were off-branch, say `Mailbox empty for branch <branch> — all items are on other branches. ✓` instead.
 
 # 5. One decision point (only if something's actionable)
-When at least one item invites an action, wait for the single reply. Actions — inbound: `start` / `comment` / `close` / `promote` (Idea→Task) / `skip`; outbound: `comment` / `ping` / `withdraw` / `skip`. `show N` expands one item then the digest stands again. Anything unnamed = skip. If everything's quiet, you already exited at the end of §4 — don't ask.
+When at least one item invites an action, wait for the single reply. Actions — inbound: `start` / `comment` / `close` / `skip`; outbound: `comment` / `ping` / `withdraw` / `skip`. `show N` expands one item then the digest stands again. Anything unnamed = skip. If everything's quiet, you already exited at the end of §4 — don't ask.
 
 # 6. Execute the batch
 Draft any needed text, each signed `— <project-name>`. Every cross-repo filing/closure keeps the `**From:** <project-name>@<branch>` / sign-off convention.
@@ -90,7 +90,6 @@ Draft any needed text, each signed `— <project-name>`. Every cross-repo filing
 Commands:
 - inbound close: `gh issue close <N> --reason "<completed|not planned>" --comment "<text>"` (always a short closing note). **Use `not planned` for anything retired rather than done** — a stale Idea, a withdrawn ask. `completed` is only for work that actually shipped. This matters beyond tidiness: the step-2 sweep in `/td-fly:close` finds previously-declined items with `--search 'reason:not-planned'`, so an Idea closed as `completed` becomes invisible there and gets re-flagged forever.
 - inbound comment: `gh issue comment <N> --body "<text>"`.
-- inbound promote (Idea→Task): resolve the org's Task issue-type ID, then `gh api graphql -f query='mutation($id: ID!, $t: ID!){ updateIssue(input:{id:$id, issueTypeId:$t}){ issue{number} } }' -F id=<node-id> -F t=<task-type-id>`.
 - inbound start: pick it up as the active piece — note it however this project tracks state; first commit on it includes `Closes #<N>`.
 - outbound comment/ping: `gh issue comment <N> --repo <slug> --body "<text>"`.
 - outbound withdraw: `gh issue close <N> --repo <slug> --reason "not planned" --comment "<withdrawal — text>"` (never silent).
@@ -102,8 +101,7 @@ Commands:
 - One digest, one decision point, one batch. No issue-by-issue walking. This command covers both directions — don't suggest a second one.
 - Outbound scope is the `## Cross-repo` list in CLAUDE.md. Widen by editing that, not by bypassing it.
 - Branch-scoped: the view is filtered to your current branch via the `@<branch>` marker. Coordinate by keeping branch names aligned across repos. Unmarked (hand-filed) inbound issues are never branch-hidden.
-- Epics are reported, never `start`ed — their open children are the work.
 - **Closing rules are shared, not duplicated** — `references/issue-discipline.md` ("Closing") is canonical for what counts as resolved / obsolete / stale, and for what to leave alone. This command decides *with* the user; `/td-fly:close` applies the same rules unattended. Same triggers, same commands, different confirmation model — don't let the two drift.
-- `promote` (Idea→Task) is a user-invoked override, never a recommendation the digest offers on its own. An Idea that can't clear the two gates in `references/issue-discipline.md` should be closed, not promoted.
+- **The agent never files an `Idea` or an `Epic`** (`references/issue-discipline.md`) — those are the owner's to create. So retyping one is not a mailbox action; an Idea that has gone stale is closed or left, never reclassified.
 - Don't re-nudge the same stale item every run; the recommendation is a once-in-a-while reminder, not a recurring prompt.
 - If GraphQL errors (rate limit/auth), surface it and fall back to a degraded inbound-only listing.

@@ -21,7 +21,7 @@ Fix the trivial and reversible inline yourself — prune a dead memory file *and
 # 3. File leftovers — the bar is HIGH
 **Read `${CLAUDE_PLUGIN_ROOT}/references/issue-discipline.md` before filing anything.** It sets both gates, the source test, the do/don't lists, the severity-aware ceiling and the per-repo backlog cap.
 
-Consolidate related candidates first. Set the Issue Type in the same `createIssue` mutation. Body opens `**From:** <project-name>@<branch>` (short name from `gh repo view --json name`, branch from `git branch --show-current`) and cites the duplicate search you ran. No confirm round — file, or drop it silently. Nothing cleared the bar → say so in step 6.
+Consolidate related candidates first. Type it **Bug or Task only** — never `Idea`, never `Epic`; those are the owner's to create, and only when asked. Set it in the same `createIssue` mutation. Body opens `**From:** <project-name>@<branch>` (short name from `gh repo view --json name`, branch from `git branch --show-current`) and cites the duplicate search you ran. No confirm round — file, or drop it silently. Nothing cleared the bar → say so in step 6.
 
 # 4. Commit & push
 - `git status --short` — if there are uncommitted changes, ask: commit / stash / discard. Wait for the answer.

@@ -96,13 +96,22 @@ file nothing that is not a Bug or a security risk until the backlog is back unde
 Re-theming the same work across successive sessions defeats the per-close ceiling; this
 does not.
 
-## Always set the Issue Type
+## Type it, and only ever Bug or Task
 
-39% of agent filings arrive untyped. Among repos with 5+ agent-filed issues, 32 are
-"mixed" — the type demonstrably works there, yet 3–83% of filings skip it. Control: zero
-such repos are all-untyped, so the type is always available. Resolve the type ID and set
-it in the same `createIssue` mutation. An untyped issue is invisible to
-`/td-fly:mailbox`'s type-based recommendations — and to half the closing rules below.
+**Never file an `Idea`. Never file an `Epic`.** Those are the owner's to create — file one
+only when the owner asks for it in so many words. Measured: of 151 Ideas, **116 (77%) were
+agent-filed**, and Idea has the worst close rate of any type (55% vs 67% for Task) — it is
+the bucket speculative work rots in. Epics are 15 issues in 5 of 75 repos; where the owner
+uses them they are real planning surfaces with sub-issues, which is precisely why the agent
+should not manufacture more.
+
+That leaves two types, and the choice is easy: **Bug** if something is broken, **Task**
+otherwise. If it is neither, re-read the gates — it probably should not be filed.
+
+Set the type in the same `createIssue` mutation. 39% of agent filings arrive untyped; among
+repos with 5+ agent-filed issues, 32 are "mixed" — the type demonstrably works there, yet
+3–83% of filings skip it. Control: zero such repos are all-untyped, so it is always
+available. An untyped issue is invisible to `/td-fly:mailbox`'s recommendations.
 
 ---
 
@@ -128,9 +137,10 @@ Age alone is not evidence, and an earlier version of this file got that wrong. A
 of the "Idea, 60+ days, untouched → close" rule against 10 real issues judged **6 of 10
 closes wrong**, because:
 
-- **The type field is unreliable** — 25% of open agent-filed issues are untyped and real
-  pending work is routinely filed as "Idea". Two issues in the sample were active scope
-  migrated from an older system, mistyped.
+- **The type field is unreliable as a trigger** — 25% of open agent-filed issues are
+  untyped and real pending work had been filed as "Idea". Two issues in the sample were
+  active scope migrated from an older system, mistyped. Staleness is judged on the issue's
+  own text and links, never on its type.
 - **It ignored structure** — it would have closed an open child of an open Epic (which the
   rules elsewhere protect), and an issue another *open* issue depends on ("Pairs with #37").
 - **The safety argument was survivorship bias.** "Only 6 of 903 closed issues lived past
@@ -142,9 +152,9 @@ closes wrong**, because:
   days has completed a single cycle in this corpus.
 
 So: **list stale candidates in the report and let the owner decide in one reply.** A
-candidate needs all of: 60+ days old, no comments, no referencing commits, not referenced
-by another open issue, not a child of an open Epic, and speculative on its own text —
-not merely typed "Idea".
+candidate needs all of: agent-filed, 60+ days old, no comments, no referencing commits, not
+referenced by another open issue, not a child of an open Epic, and speculative on its own
+text. An owner-filed Idea is never a candidate — they meant it.
 
 ## Leave alone
 
