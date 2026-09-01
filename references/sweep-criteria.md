@@ -71,11 +71,11 @@ Pass the subagent this project's memory dir and its `MEMORY.md` index.
 - **Relative dates** — "last week", "recently". Memory outlives the sentence; resolve to
   an absolute date or drop it.
 
-## The test, restated
+## The third case
 
-*Does it constrain the code?* → repo doc, versioned.
-*Is it about how we work?* → memory.
-*Neither?* → it does not get written down at all.
+`contract.md` gives the two-homes test (constrains the code → repo doc; about how we work
+→ memory). The case it omits: **neither → it does not get written down at all.** That is
+the common one during a sweep.
 
 ## Acting on the result
 

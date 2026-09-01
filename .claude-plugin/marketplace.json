@@ -6,8 +6,12 @@
   "plugins": [
     {
       "name": "td-fly",
-      "source": { "source": "github", "repo": "mergodon/td-fly" },
+      "source": {
+        "source": "github",
+        "repo": "mergodon/td-fly"
+      },
       "description": "Lean work rhythm: close + mailbox + cross-repo GitHub issues."
     }
-  ]
+  ],
+  "description": "td-fly's own marketplace \u2014 the lean close + mailbox work rhythm, installable on any box straight from the GitHub repo."
 }

@@ -17,7 +17,7 @@ Because the marketplace source is the GitHub repo (not this local folder), itera
 
 ## Cross-repo rendezvous
 
-The plugin is **self-contained** — the `close` / `mailbox` commands carry their own protocol, so there is no `@import` and no symlink. `contract.md` stays as the canonical human-readable reference for the rhythm. A project only declares its cross-repo connections under a `## Cross-repo` heading in its own `CLAUDE.md`; that list scopes `/td-fly:mailbox` outbound.
+`contract.md` is the canonical reference for the rhythm and owns the architecture explanation. A project declares its cross-repo connections under a `## Cross-repo` heading in its own `CLAUDE.md`; that list scopes `/td-fly:mailbox` outbound.
 
 ## `references/` — the criteria the commands load on demand
 
@@ -41,4 +41,4 @@ classification of 110 filings, and the file shows its working.
 - [x] cross-repo rendezvous convention (self-contained commands; `contract.md` = reference)
 - [x] `references/` — filing bar + auto-close + sweep criteria (v0.10.0)
 
-td-fly is feature-complete and lean by design. The agents/workflows playbook (a parked backlog of future ideas) was retired to keep it that way; it lives in git history if ever revived.
+Lean by design — but not frozen. The `references/` split is a deliberate, bounded exception: judgement that would bloat a command file lives in a file loaded only by the step that needs it, so the always-on cost stays ~184 tokens. The agents/workflows playbook (a parked backlog of future ideas) was retired and lives in git history if ever revived.

@@ -10,7 +10,7 @@ You are running the mailbox check: gather cross-repo work both directions, show 
 - `git branch --show-current` → hold `<branch>`. **Mailbox is branch-scoped:** it shows only filings tagged for `<branch>`. A marker's branch is the part after `@` in `**From:** name@branch`; absent = `main`. Empty output (detached HEAD) → skip branch filtering and note `branch: detached — not filtered` in the digest header.
 
 # 2. Inbound — open issues in this repo
-Issue Type isn't exposed by `gh issue list`, so fetch via GraphQL (no preview header needed):
+Fetch via GraphQL — one call covers type, body and author (`gh issue list --json number,title,body,issueType` also exposes Issue Type as of gh 2.98.0, if you ever need a lighter query):
 ```
 gh api graphql -f query='query($owner:String!,$name:String!){
   repository(owner:$owner,name:$name){
@@ -88,7 +88,7 @@ Draft any needed text, each signed `— <project-name>`. Every cross-repo filing
 - **Confirm once only when** the directive is bare *and* you're inventing material content the user hasn't seen, OR the action is destructive (withdrawing/reopening another repo's issue). Show those drafts together, "post all? (yes / edit N / drop N)".
 
 Commands:
-- inbound close: `gh issue close <N> --comment "<text>"` (always a short closing note).
+- inbound close: `gh issue close <N> --reason "<completed|not planned>" --comment "<text>"` (always a short closing note). **Use `not planned` for anything retired rather than done** — a stale Idea, a withdrawn ask. `completed` is only for work that actually shipped. This matters beyond tidiness: the step-2 sweep in `/td-fly:close` finds previously-declined items with `--search 'reason:not-planned'`, so an Idea closed as `completed` becomes invisible there and gets re-flagged forever.
 - inbound comment: `gh issue comment <N> --body "<text>"`.
 - inbound promote (Idea→Task): resolve the org's Task issue-type ID, then `gh api graphql -f query='mutation($id: ID!, $t: ID!){ updateIssue(input:{id:$id, issueTypeId:$t}){ issue{number} } }' -F id=<node-id> -F t=<task-type-id>`.
 - inbound start: pick it up as the active piece — note it however this project tracks state; first commit on it includes `Closes #<N>`.
@@ -103,5 +103,7 @@ Commands:
 - Outbound scope is the `## Cross-repo` list in CLAUDE.md. Widen by editing that, not by bypassing it.
 - Branch-scoped: the view is filtered to your current branch via the `@<branch>` marker. Coordinate by keeping branch names aligned across repos. Unmarked (hand-filed) inbound issues are never branch-hidden.
 - Epics are reported, never `start`ed — their open children are the work.
+- **Closing rules are shared, not duplicated** — `references/issue-discipline.md` ("Closing") is canonical for what counts as resolved / obsolete / stale, and for what to leave alone. This command decides *with* the user; `/td-fly:close` applies the same rules unattended. Same triggers, same commands, different confirmation model — don't let the two drift.
+- `promote` (Idea→Task) is a user-invoked override, never a recommendation the digest offers on its own. An Idea that can't clear the two gates in `references/issue-discipline.md` should be closed, not promoted.
 - Don't re-nudge the same stale item every run; the recommendation is a once-in-a-while reminder, not a recurring prompt.
 - If GraphQL errors (rate limit/auth), surface it and fall back to a degraded inbound-only listing.

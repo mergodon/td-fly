@@ -21,8 +21,6 @@ state is **mandatory, not optional**. Sort what's worth keeping by *kind*:
   gates, the do/don't lists and the 3-per-close ceiling live in the plugin's
   `references/issue-discipline.md`, which `/td-fly:close` loads.
 
-The test: *does it constrain the code?* → repo doc. *Is it about how we work?* → memory.
-
 **Which repo doc.** Nearest wins: a fact that only governs one package or module belongs
 in that directory's own `CLAUDE.md`, not the root one — Claude reads every `CLAUDE.md`
 from the file's directory up, so a root file in a monorepo taxes every session with
@@ -50,7 +48,8 @@ another repo (or reads ones filed into it):
 - **Every cross-repo issue body opens with** `**From:** <project-name>@<branch>` — the
   canonical sender marker: who filed it and from which branch. `<branch>` is the one the
   filing repo was on (`git branch --show-current`) — always stamped, `@main` included.
-  A marker with no `@` part (legacy or hand-filed) reads as `main`.
+  A legacy marker with no `@` part reads as `main`. An issue with *no* marker at all is
+  hand-filed and is never branch-hidden (below).
 - **Branch-scoped rendezvous.** `/td-fly:mailbox` filters to the branch you're on — it
   shows only filings whose `@<branch>` matches your current branch. Coordinate by keeping
   branch names aligned across the repos that talk: `main` ↔ `main`, `feature-x` ↔
