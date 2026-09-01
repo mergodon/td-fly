@@ -86,6 +86,7 @@ in `references/issue-discipline.md`, which most sweep findings will not clear.
 
 Never re-flag something already parked, already declined, or deliberately accepted as
 lean. Saying it once is the whole rule. A fresh-context subagent cannot know what was
-declined, so check the record before flagging: `gh issue list --state closed --search
-'reason:not-planned' --limit 30` and a skim of open issue titles. If a finding matches a
-closed-not-planned issue, it was already declined — drop it.
+declined, so check the record before flagging: `gh issue list --state closed --limit 50 --json
+number,title,stateReason` and keep the `NOT_PLANNED` ones (the `--search
+'reason:not-planned'` form is index-backed and lags a few seconds after a close, so it can
+miss a just-retired item). If a finding matches one, it was already declined — drop it.

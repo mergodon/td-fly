@@ -28,10 +28,17 @@ Consolidate related candidates first. Type it **Bug or Task only** — never `Id
 - Commit shipped work with a conventional message (`feat:` / `fix:` / `chore:` / `docs:`).
 - Push to `origin/main`. No PRs. If push is rejected, surface the error and stop.
 
-# 5. Close what's provably done
-Runs *after* the commit so this session's work is visible to `git log --grep`. Same reference file, "Closing" section.
+# 5. Tend the backlog
+Runs *after* the commit so this session's work is visible to `git log --grep`. Rules live in `${CLAUDE_PLUGIN_ROOT}/references/issue-discipline.md` ("Closing").
 
-Fetch this repo's open issues (`gh issue list --state open --json number,title,body,issueType` — `issueType` is exposed as of gh 2.98.0). Close **only** on positive evidence: a commit implementing it (cite the sha), or a premise you verified is dead. Age is never evidence — stale candidates get **listed in the report for the owner to decide**, never auto-closed. Every close carries a one-line comment; cap at 10 per run. Nothing qualifies → skip silently.
+Fetch once: `gh issue list --state open --limit 100 --json number,title,body,issueType,comments,createdAt`. Three passes — the first two run unattended, only the third asks.
+
+**5a — type what's untyped (automatic).** Every open issue with no type gets one: **Bug** if something is broken, **Task** otherwise. **Never change a type that is already set** — that was someone's decision. Untyped is not a decision: 31% of open issues carry no type, and most owner-filed ones simply predate the feature. Typical load is 2 per repo (p90 6), so this is seconds; cap at 15.
+Resolve the org's type IDs once — `gh api graphql -f query='query($o:String!){organization(login:$o){issueTypes(first:20){nodes{id name}}}}' -F o=<owner>` — then per issue, get its node id and `gh api graphql -f query='mutation($id:ID!,$t:ID!){updateIssue(input:{id:$id,issueTypeId:$t}){issue{number issueType{name}}}}' -F id=<node-id> -F t=<type-id>`.
+
+**5b — close what's provably done (automatic).** Positive evidence only: a commit implementing it (cite the sha), or a premise you verified is dead. Age is never evidence. Cap 10, every close carries a one-line comment.
+
+**5c — stale candidates (the one HIL).** List them in the report as a single batched question — number them, one line each, recommended action per item, and take the answer in one reply. Never close on age alone; the backtest that justified doing so was wrong 6 times in 10. Nothing stale → don't ask, just say the backlog is clean.
 
 # 6. Report
-One line: what shipped, what the sweep found, what was filed (and what was dropped at the bar), what was closed, what stale candidates await a call, and what went to a repo doc vs memory.
+One line: what shipped, what the sweep found, what was filed (and what was dropped at the bar), what was typed and closed, and what went to a repo doc vs memory. If step 5c found stale candidates, they follow as the single numbered question — otherwise there is no question and the close is done.

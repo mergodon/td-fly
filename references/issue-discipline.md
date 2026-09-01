@@ -115,7 +115,19 @@ available. An untyped issue is invisible to `/td-fly:mailbox`'s recommendations.
 
 ---
 
-# Closing
+# Tending the backlog
+
+## Typing — automatic, and safe
+
+Set a type on every open issue that lacks one; **never change a type already set.** That
+distinction is the whole safety argument: an untyped issue is an absence of a decision, not
+a decision. 31% of open issues (129 of 420, across 42 repos) carry no type, and of the 34
+owner-filed ones, 19 predate Issue Types existing at all — median age 236 days. Per-repo
+load is trivial: median 2, p90 6, max 11.
+
+Bug if something is broken, Task otherwise — the same two types the agent is allowed to
+file. Resolve the org's type IDs once (they are org-level and reusable across every repo),
+then `updateIssue`. This is reversible and improves every later digest, so it does not ask.
 
 ## Close these, without asking
 
