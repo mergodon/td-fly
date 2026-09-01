@@ -17,9 +17,18 @@ state is **mandatory, not optional**. Sort what's worth keeping by *kind*:
 - **Memory** is only for *how we work*: preferences, working-style feedback, cross-session
   continuity. **Never put code-governing knowledge in memory** — it's private to one
   machine, unversioned, and recalled by chance. That is data loss waiting to happen.
-- Leftover TODOs → GitHub issues.
+- Leftover TODOs → GitHub issues, but only the few that clear the filing bar — the two
+  gates, the do/don't lists and the 3-per-close ceiling live in the plugin's
+  `references/issue-discipline.md`, which `/td-fly:close` loads.
 
 The test: *does it constrain the code?* → repo doc. *Is it about how we work?* → memory.
+
+**Which repo doc.** Nearest wins: a fact that only governs one package or module belongs
+in that directory's own `CLAUDE.md`, not the root one — Claude reads every `CLAUDE.md`
+from the file's directory up, so a root file in a monorepo taxes every session with
+context most of them don't need. Machine-local or personal notes (a local port, a
+scratch path, an unshared preference) go in `CLAUDE.local.md` — and add that filename to
+the repo's `.gitignore`, which is what keeps it personal. It is not ignored by default.
 
 ## Rhythm
 Two commands carry the rhythm:
