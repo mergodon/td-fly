@@ -7,7 +7,7 @@ You are running the mailbox check: gather cross-repo work both directions, show 
 # 1. Setup
 - `gh repo view --json name,owner` → hold `<owner>/<name>`. If it fails: abort, "No GitHub remote or `gh` not authenticated."
 - `<project-name>` = `<name>`. It signs comments and is the `**From:**` marker to filter on.
-- `git branch --show-current` → hold `<branch>` for the marker on anything you file. Empty (detached HEAD) → `main`. **Nothing is filtered by branch** — a marker's `@<branch>` is shown as a label, never used to hide.
+- **This command files nothing** — it comments, closes and starts. So it needs no branch of its own; `<branch>` here only ever means the one parsed out of *their* marker. **Nothing is filtered by branch** — a marker's `@<branch>` is shown as a label, never used to hide.
 - **"Ours" vs "theirs"** — every login on both sides is usually the same person, so key on the sign-off: a comment whose body ends `— <project-name>` is ours; anything else is theirs.
 
 # 2. Inbound — open issues in this repo
@@ -103,9 +103,9 @@ If **no item is actionable** (every recommendation is "leave" or a report-only E
 Wait for the single reply. Actions — inbound: `start` / `comment` / `close` / `skip`; outbound: `comment` / `ping` / `withdraw` / `skip`. `show N` expands one item, `edit N: <text>` swaps its draft, then the digest stands again. Anything unnamed = skip.
 
 # 6. Execute the batch
-Every draft is signed `— <project-name>`; every filing keeps the `**From:** <project-name>@<branch>` marker.
+Every draft is signed `— <project-name>`. Nothing here files a new issue, so no `**From:**` marker is written — the marker is only ever read.
 
-- **Everything the digest showed a draft for just runs** — the reply approved the text. Comments and closes are reversible (`gh issue comment --edit`, `gh issue reopen`).
+- **Everything the digest showed a draft for just runs** — the reply approved the text. Comments and closes are reversible (`gh issue comment --edit-last`, `gh issue reopen`).
 - **`withdraw` is the one second confirm** — it closes another repo's issue. Show the closing text, "withdraw N? (yes / edit / drop)", then run.
 
 Commands:

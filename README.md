@@ -61,12 +61,11 @@ The commands stay short; the judgement lives in `references/`, loaded via
 
 | file | loaded by | what it settles |
 |---|---|---|
-| `issue-discipline.md` | `close` steps 3 + 5 | when an issue is worth filing, when to close one |
+| `issue-discipline.md` | `close` steps 3 + 5, and `mailbox`'s close actions | when an issue is worth filing, when to close one |
 | `sweep-criteria.md` | `close` step 2 | what counts as doc/memory drift — and what not to flag |
 
 The references carry only the rules. The census, backtests and the reasons behind each
-threshold live in `docs/evidence.md`, which nothing loads at run time — re-measure
-before moving a number.
+threshold live in `docs/evidence.md` — re-measure before moving a number.
 
 ## Status
 

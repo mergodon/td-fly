@@ -20,7 +20,7 @@ state is **mandatory, not optional**. Sort what's worth keeping by *kind*:
 - Leftover TODOs → GitHub issues, but only the few that clear the filing bar — the two
   gates, the do/don't lists and the 3-per-close ceiling live in the plugin's
   `references/issue-discipline.md`, which `/td-fly:close` loads; the evidence behind
-  the numbers is in `docs/evidence.md`, which nothing loads.
+  the numbers is in `docs/evidence.md`.
 
 **Which repo doc.** Nearest wins: a fact that only governs one package or module belongs
 in that directory's own `CLAUDE.md`, not the root one — Claude reads every `CLAUDE.md`

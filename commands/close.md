@@ -17,7 +17,7 @@ Sort by *kind* — two homes, and the split matters:
 Nothing new of either kind → skip.
 
 # 2. Sweep — docs + memory (fresh eyes)
-Spawn ONE subagent with **no prior context** — tell it nothing about this session — and hand it `<plugin root>/references/sweep-criteria.md`. That file defines what to verify, what counts as drift, and what NOT to flag. Paste the resolved absolute path into its prompt, along with this project's memory dir (`~/.claude/projects/<absolute cwd with every `/` replaced by `-`>/memory/`) and its `MEMORY.md`. Ask for a SHORT prioritized list (HIGH/MED/LOW) — no scores, no grades, no rewritten docs.
+Spawn ONE subagent with **no prior context** — tell it nothing about this session — and hand it `<plugin root>/references/sweep-criteria.md`. That file defines what to verify, what counts as drift, and what NOT to flag. Paste the resolved absolute path into its prompt, along with this project's memory dir (``~/.claude/projects/<absolute cwd with every `/` replaced by `-`>/memory/``) and its `MEMORY.md`. Ask for a SHORT prioritized list (HIGH/MED/LOW) — no scores, no grades, no rewritten docs.
 
 Fix the trivial and reversible inline yourself — prune a dead memory file *and* its index line, correct a stale version, move drifted knowledge into the repo doc. **Sweep findings never become issues** — the source test in step 3's reference bars them. Clean bill → one line, move on.
 
