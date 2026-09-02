@@ -81,12 +81,12 @@ the common one during a sweep.
 
 Fix the trivial and reversible inline: prune a dead memory file **and** its index line,
 correct a stale version, move drifted knowledge into the repo doc, delete a dead path.
-Anything bigger or judgment-heavy folds into the park step — subject to the filing bar
-in `references/issue-discipline.md`, which most sweep findings will not clear.
+**A sweep finding never becomes an issue** — the source test in
+`references/issue-discipline.md` bars it. Bigger than inline → report it and stop.
 
-Never re-flag something already parked, already declined, or deliberately accepted as
-lean. Saying it once is the whole rule. A fresh-context subagent cannot know what was
-declined, so check the record before flagging: `gh issue list --state closed --limit 50 --json
+Never re-flag something already parked (an open issue) or already declined. A
+fresh-context subagent cannot know what was declined, so check the record before
+flagging: `gh issue list --state closed --limit 50 --json
 number,title,stateReason` and keep the `NOT_PLANNED` ones (the `--search
 'reason:not-planned'` form is index-backed and lags a few seconds after a close, so it can
 miss a just-retired item). If a finding matches one, it was already declined — drop it.
