@@ -44,8 +44,24 @@ gh api graphql -f query='query($q: String!) {
 ```
 Keep only issues whose body starts with `**From:** <project-name>`. `issueCount` > 100 → say the list is truncated. (The search index lags a few seconds — a just-filed one may show next run.)
 
+**Then the closed ones — a second, bounded query.** An outbound issue the other repo finished just *disappears* from a `state:open` list: we never learn it landed. So ask for the recently-closed ones too, as a separate call — never by dropping `state:` from the query above, which would let old closed issues eat the 100-item cap and silently hide an open one.
+```
+gh api graphql -f query='query($q: String!) {
+  search(query: $q, type: ISSUE, first: 50) {
+    nodes { ... on Issue {
+      number title url state stateReason closedAt
+      repository { nameWithOwner } issueType { name }
+      comments(last: 1) { nodes { author { login } body } }
+    } }
+  }
+}' -F q='repo:<slug1> repo:<slug2> "From: <project-name>" type:issue state:closed closed:>=<YYYY-MM-DD, 14 days ago>'
+```
+Same `**From:**` filter. These are **report-only** — the other repo already decided; there is nothing here to approve.
+
 # 4. Digest — one numbered list
 Inbound newest first, Epics last. Outbound bucketed by who holds the ball. Number continuously across both so "close 3" is unambiguous. Show the type as a label, never bucket by it — recommendations key on **evidence, not type**.
+
+Resolved outbound goes in its own trailing section — **no recommendation, no draft, and it never makes the digest actionable.** `stateReason` says which it was: `COMPLETED` → they shipped it; `NOT_PLANNED` → they declined or withdrew it. Report both the same way; re-filing a declined one is a fresh trip through the filing bar, not a mailbox action.
 
 Recommendation per item (one line, first match wins). **Under every non-`leave` recommendation, print the draft text it would post** — the one reply approves the text too.
 
@@ -75,10 +91,13 @@ Mailbox: <I> inbound + <O> outbound
          → <recommendation>
            "<draft text — <project-name>>"
 
+✅ Resolved (closed in the last 14 days — nothing to do)
+     <repo>#<N>  <title>   <done | declined>   <closed date>
+
 Decide in one line — e.g. "close 1, ping 2, start 3, skip rest". `show N` expands an item; `edit N: <text>` replaces a draft.
 ```
 
-If **no item is actionable** (every recommendation is "leave" or a report-only Epic line), don't stage a decision point — close with `Nothing needs a call — all quiet. ✓` and stop. Both lists empty → `Mailbox empty. ✓  (inbound: none; outbound scope: <slugs or "none declared">)` and exit.
+If **no item is actionable** (every recommendation is "leave" or a report-only Epic line), don't stage a decision point — print the ✅ Resolved section if it has anything, then close with `Nothing needs a call — all quiet. ✓` and stop. Nothing open either direction and nothing resolved → `Mailbox empty. ✓  (inbound: none; outbound scope: <slugs or "none declared">)` and exit.
 
 # 5. One decision point (only if something's actionable)
 Wait for the single reply. Actions — inbound: `start` / `comment` / `close` / `skip`; outbound: `comment` / `ping` / `withdraw` / `skip`. `show N` expands one item, `edit N: <text>` swaps its draft, then the digest stands again. Anything unnamed = skip.
@@ -97,10 +116,13 @@ Commands:
 - outbound withdraw: `gh issue close <N> --repo <slug> --reason "not planned" --comment "<withdrawal — text>"` (never silent).
 
 # 7. Summary — one line
-`Mailbox done: <I+O> reviewed — <C> closed, <Co> commented/pinged, <St> started, <W> withdrawn, rest left.`
+`Mailbox done: <I+O> reviewed — <C> closed, <Co> commented/pinged, <St> started, <W> withdrawn, rest left. <R> outbound resolved since last check.`
 
 # Rules
 - One digest, one decision point, one batch. No issue-by-issue walking. This command covers both directions — don't suggest a second one.
 - Outbound scope is the `## Cross-repo` list in CLAUDE.md. Widen by editing that, not by bypassing it.
 - **Closing rules are shared, not duplicated** — `references/issue-discipline.md` ("Tending the backlog") is canonical for resolved / obsolete / stale / withdraw and for what to leave alone. This command decides *with* the user; `/td-fly:close` applies the same rules unattended. Same triggers, same commands, different confirmation model — don't let the two drift.
+- **Never close an outbound issue because *we* think the work is done** — it lives in their repo and is theirs to close. `withdraw` is the only exception and it means the premise is dead, not that it shipped. Our side of a finished outbound issue is reading the ✅ Resolved section.
+- **Reporting a finished *inbound* issue needs nothing extra** — `/td-fly:close` 5b already closes it on commit evidence with a comment signed `— <project-name>`, and that comment on the thread *is* the report back to the repo that filed it. Don't add a second notification.
+- **The ✅ Resolved section lives here, not in `/td-fly:close`** — outbound state is a network query into other repos, and `close` step 5 tends *this* repo's backlog only.
 - **The agent never files an `Idea` or an `Epic`** — those are the owner's to create. Retyping one is not a mailbox action; a stale Idea is closed or left, never reclassified.

@@ -55,4 +55,13 @@ another repo (or reads ones filed into it):
   receiving repo almost never has the sender's branch, see `docs/evidence.md`).
 - **Sign every cross-repo comment and closure** with `— <project-name>`. Never address
   GitHub usernames in cross-repo prose.
+- **Each side closes its own issues.** An inbound issue is closed here, on commit
+  evidence, by `/td-fly:close` — the signed closing comment on the thread is the report
+  back to whoever filed it, and no second notification is owed. An outbound issue is
+  *theirs* to close; we never close one because we believe it shipped. The only close we
+  reach into another repo for is a **withdraw**, and that means the premise is dead.
+- **Resolution travels back on the next mailbox run.** A closed outbound issue would
+  otherwise just vanish from a `state:open` list, so `/td-fly:mailbox` also asks for
+  outbound issues closed in the last 14 days and prints them report-only — done or
+  declined, nothing to approve.
 - `<project-name>` = this repo's short name (the `name` in `owner/name`).

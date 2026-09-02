@@ -78,5 +78,6 @@ before moving a number.
 - [x] agent files `Bug`/`Task` only — `Idea` and `Epic` are the owner's to create (v0.12.0)
 - [x] `close` step 5 tends the backlog: auto-type, evidence-close, one batched HIL (v0.13.0)
 - [x] two adversarial reviews: anchored `#N` grep, `gh --type`, close commits without asking, pushes `HEAD`, mailbox shows drafts in the digest and no longer filters by branch; evidence moved to `docs/` (v0.14.0)
+- [x] mailbox reports outbound issues the other repo closed in the last 14 days — each side closes its own (v0.15.0)
 
 Lean by design — but not frozen. The `references/` split is a deliberate, bounded exception: judgement that would bloat a command file lives in a file loaded only by the step that needs it, so the always-on cost stays small (measure it with `claude plugin details td-fly`). The agents/workflows playbook (a parked backlog of future ideas) was retired and lives in git history if ever revived.
