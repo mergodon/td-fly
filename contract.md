@@ -35,8 +35,7 @@ Two commands carry the rhythm:
   filed *into others*, as one digest.
 
 ## Work mode
-Default: work in this repo only; commit and push when asked. Don't push or open PRs
-unprompted. Prefer acting automatically on small, reversible things rather than asking —
+Default: work in this repo only; commit freely, push when the work is done. No PRs. Prefer acting automatically on small, reversible things rather than asking —
 and don't raise the same suggestion every session; mention it once, then let it rest.
 
 ## Cross-repo protocol
