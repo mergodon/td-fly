@@ -1,7 +1,7 @@
 # td-fly
 
-A lean work rhythm shipped as a self-contained Claude Code plugin. `contract.md` is the
-reference; README.md carries the build status and the versioning discipline.
+The plugin is the product: `skills/` is the rhythm, `hooks/` the nudge, `evals/` the test.
+README.md carries install and the deploy discipline (bump → commit → push → update → restart).
 
 ## Cross-repo
 <!-- one owner/name slug per line below; this list scopes /td-fly:mailbox outbound -->
