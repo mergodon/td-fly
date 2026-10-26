@@ -1,7 +1,7 @@
 {
   "name": "td-fly",
   "description": "Lean work rhythm: close + mailbox + a cross-repo protocol over GitHub issues and live sessions.",
-  "version": "1.0.0-v3",
+  "version": "1.0.0",
   "license": "MIT",
   "author": {
     "name": "mergodon"

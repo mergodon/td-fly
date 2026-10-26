@@ -2,14 +2,13 @@
 name: mailbox
 description: Cross-repo check — issues other repos filed into this one, and issues this repo filed into others, as one digest with a recommended action each. One reply decides; reversible actions just run.
 when_to_use: 'any new issues? · anything in the mailbox? · did they reply? · what did the other repos file? · who is waiting on us? · new issues from <repo>? · check the inbox'
-allowed-tools: Bash(gh repo view *), Bash(gh api graphql *), Bash(gh issue *), Bash(git log *), Bash(cat *), Bash(date *), Bash(mkdir *), Bash(tmux list-*), Bash(tmux send-keys *), Bash(tmux capture-pane *)
+allowed-tools: Bash(gh repo view *), Bash(gh api graphql *), Bash(gh issue *), Bash(git log *), Bash(tmux list-*), Bash(tmux send-keys *), Bash(tmux capture-pane *)
 ---
 
 One digest, one decision, one batch. Never walk issues one at a time. Files nothing — it comments, closes, starts, and talks. Load `td-fly:protocol` before any cross-repo write or live message.
 
 # 1. Facts
 `gh repo view --json name,owner` → `<name>`, `<owner>/<name>`. Fails → stop: "No GitHub remote or `gh` not authenticated."
-Last run stamp: `cat "${CLAUDE_PLUGIN_DATA}/last-mailbox-<owner>-<name>"` (ISO time; missing → everything is new). Items updated after it carry a `new` label.
 Ours vs theirs: a comment ending `— <name>` is ours; anything else is theirs.
 
 # 2. Inbound — open issues here
@@ -33,9 +32,9 @@ Inbound, first match wins: Epic → report-only · a read commit resolves it →
 Outbound: last comment theirs → "answer?" + draft · ours/none < 14 d → "leave" · 14–60 d → "ping?" + draft · > 60 d → "leave", or "withdraw?" only with the dead premise named.
 Live items add one option: **"tell <session>?"** + the one-line message (protocol shape: ask, issue URL, what we checked).
 ```
-Mailbox: <I> inbound + <O> outbound   (new since <stamp>: <k>)
+Mailbox: <I> inbound + <O> outbound
 📥 Inbound
-  1. #N  Type  title   from <who>@<branch>   <age>  [new] [● live: <session>]
+  1. #N  Type  title   from <who>@<branch>   <age>  [● live: <session>]
        → <recommendation>   "<draft — <name>>"
 📤 Outbound (into: <slugs>)
   2. <repo>#N  Type  title   <ball>   <age>
@@ -43,7 +42,7 @@ Mailbox: <I> inbound + <O> outbound   (new since <stamp>: <k>)
 ✅ Resolved elsewhere (14 d): <repo>#N  title  done|declined  <date>
 Decide in one line — e.g. "close 1, ping 2, tell 3, start 4, skip rest". `show N` expands, `edit N: <text>` swaps a draft.
 ```
-Nothing actionable → print ✅ if any, then `Nothing needs a call — all quiet. ✓`, write the stamp (step 7), stop.
+Nothing actionable → print ✅ if any, then `Nothing needs a call — all quiet. ✓`, stop.
 
 # 6. One reply, one batch
 Actions — inbound: start / comment / close / tell / skip. Outbound: comment / ping / withdraw / tell / skip. Unnamed = skip. Drafts shown were approved by the reply; only **withdraw** confirms once more (it closes their issue).
@@ -53,8 +52,7 @@ Actions — inbound: start / comment / close / tell / skip. Outbound: comment / 
 - tell: protocol tier 1 (`SendMessage`), else tier 2 (tmux), else say "no live peer" and leave the issue as the record.
 - withdraw: `gh issue close <N> --repo <slug> --reason "not planned" --comment "<why the premise is dead> — <name>"`.
 
-# 7. Stamp and summary
-`mkdir -p "${CLAUDE_PLUGIN_DATA}" && date -u +%FT%TZ > "${CLAUDE_PLUGIN_DATA}/last-mailbox-<owner>-<name>"`.
+# 7. Summary
 `Mailbox done: <n> reviewed — <c> closed, <k> commented/pinged, <t> told live, <s> started, <w> withdrawn, rest left. <r> resolved elsewhere.`
 
 Rules: never close an outbound issue because we think it shipped — theirs to close. A finished inbound issue needs no extra notice: `/td-fly:close` closes it on commit evidence with a signed comment, and that is the report. The ✅ section lives here only. Never file an Idea or an Epic; never retype one.
