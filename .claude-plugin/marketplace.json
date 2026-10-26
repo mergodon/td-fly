@@ -10,8 +10,8 @@
         "source": "github",
         "repo": "mergodon/td-fly"
       },
-      "description": "Lean work rhythm: close + mailbox + cross-repo GitHub issues."
+      "description": "Lean work rhythm: close + mailbox + a cross-repo protocol over GitHub issues and live sessions."
     }
   ],
-  "description": "td-fly's own marketplace \u2014 the lean close + mailbox work rhythm, installable on any box straight from the GitHub repo."
+  "description": "td-fly's own marketplace — the lean close + mailbox work rhythm, installable on any box straight from the GitHub repo."
 }

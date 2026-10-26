@@ -45,4 +45,4 @@ scripts/inbox.sh                one line or nothing; exits 0 on every failure
 
 ## Cross-repo
 
-A project declares its connected repos in its own `CLAUDE.md` under `## Cross-repo`, one `owner/name` per line. That list scopes the mailbox's outbound side. The protocol skill carries the rest.
+A project lists its connected repos under `## Cross-repo` in its own `CLAUDE.md`; the protocol skill carries the shape and what the list scopes.
