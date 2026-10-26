@@ -1,9 +1,8 @@
 # td-fly
 
-A lean work rhythm shipped as a self-contained Claude Code plugin. `contract.md` is the
-reference; README.md carries the build status and the versioning discipline.
+The plugin's own repo. `contract.md` is the protocol; a rule lives there or in
+`references/issue-discipline.md`, never twice. Deploy steps: README.
 
 ## Cross-repo
-<!-- one owner/name slug per line below; this list scopes /td-fly:mailbox outbound -->
 mergodon/rgb-rgbtracker-web
 mergodon/rgb-analytics
