@@ -1,7 +1,7 @@
 # td-fly
 
 The plugin is the product: `skills/` is the rhythm, `hooks/` the nudge.
-README.md carries install and the deploy discipline (bump → commit → push → update → restart).
+README.md carries install and the deploy discipline (bump → commit → push → update → reload).
 
 ## Cross-repo
 mergodon/rgb-rgbtracker-web

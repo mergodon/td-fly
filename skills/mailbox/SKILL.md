@@ -28,7 +28,7 @@ Slugs = lines under `## Cross-repo` in this repo's `CLAUDE.md`. None → `Outbou
 
 # 5. Digest
 Number continuously. Inbound newest first, Epics last. Outbound bucketed by who holds the ball. Type is a label; recommendations key on evidence.
-Inbound, first match wins: Epic → report-only · a read commit resolves it → "close?" + draft · concrete, no commit → "start, or leave?" · **stale** (all of: agent-filed, 60+ days, 0 comments, no commit, 0 cross-refs, no parent, speculative on its own text) → "close?" + draft · else "leave?".
+Inbound, first match wins: Epic or the `Doc cleanup` issue → report-only · a read commit resolves it → "close?" + draft · concrete, no commit → "start, or leave?" · **stale** (all of: agent-filed, 60+ days, 0 comments, no commit, 0 cross-refs, no parent, speculative on its own text) → "close?" + draft · else "leave?".
 Outbound: last comment theirs → "answer?" + draft · ours/none < 14 d → "leave" · 14–60 d → "ping?" + draft · > 60 d → "leave", or "withdraw?" only with the dead premise named.
 Live items add one option: **"tell <session>?"** + the one-line message (protocol shape: ask, issue URL, what we checked).
 ```

@@ -26,4 +26,4 @@ Every path, command, flag, URL, version and status line in a doc is a claim.
 Auto memory belongs to the harness. Flag only a fact that **governs code**: an invariant, a deploy step, a config value, a port, a schema rule. Memory is per machine and unversioned; that fact belongs in a repo doc. HIGH, with the file name. Preferences, feedback and working notes are not yours to judge.
 
 ## 5. Already decided
-Before flagging, read `gh issue list --state closed --limit 50 --json number,title,stateReason` and drop anything matching a `NOT_PLANNED` item, and anything an open issue already carries.
+Before flagging, read `gh issue list --state closed --limit 50 --json number,title,stateReason` and `gh issue list --state open --limit 100 --json number,title,body`. Drop anything matching a `NOT_PLANNED` item, and anything an open issue already carries — the unticked boxes of the `Doc cleanup` issue included. An unticked box there that is no longer true → one line `done: <box text>`.

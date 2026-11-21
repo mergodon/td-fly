@@ -22,9 +22,9 @@ Core project knowledge that constrains the code and surfaced this session: an in
 - Nothing core → skip. Transcripts and git are the archive. Memory is not yours: auto memory writes itself.
 
 # 2. Sweep — fresh eyes
-Spawn ONE subagent with no knowledge of this session. Its prompt: the absolute path `${CLAUDE_SKILL_DIR}/sweep.md`, this repo's root, and this project's memory dir (`~/.claude/projects/<cwd with every "/" → "-">/memory/`). Ask for the short list the file describes.
+Spawn ONE subagent with no knowledge of this session. Its prompt: the absolute path `${CLAUDE_SKILL_DIR}/sweep.md`, this repo's root, and this project's auto-memory dir — the path your session context names; none named → say so, and the sweep skips its memory check. Ask for the short list the file describes.
 Fix the trivial inline: dead path, stale version, duplicate, a code-governing fact in memory moved to the repo doc.
-Bigger → the repo's ONE standing **doc cleanup** issue (Task, title `Doc cleanup`, a checklist body): add each finding not already on it as `- [ ]`, tick what this close fixed. None open → create it, body opening `**From:** <name>@<branch>` (needs a remote; else one report line). Every box ticked → close it, completed. It is the only issue a sweep finding ever reaches, and it skips the bar and the ceiling in 3.
+Bigger → the repo's ONE standing **doc cleanup** issue (Task, title `Doc cleanup`, a checklist body): add each finding not already on it as `- [ ]`, tick what this close fixed and what the sweep reports `done:`. None open → create it, body opening `**From:** <name>@<branch>` (needs a remote; else one report line). Every box ticked → close it, completed. It is the only issue a sweep finding ever reaches, and it skips the bar and the ceiling in 3.
 
 # 3. File — the bar is high
 File only what passes **both** gates: a **current, named victim** (a user hitting an error, a broken deploy, the owner's direct ask — never "a future maintainer") and **evidence a reader can re-run** (a trace, a status code, a failing command, a quoted ask). Found by looking at the repo instead of doing the work → not filed, however worded.
@@ -42,7 +42,7 @@ On the list from 0, after the commit so `git log` sees this session.
 - **Type the untyped** (cap 15): `gh issue edit <N> --type <Bug|Task>` — Bug if broken, Task otherwise. Never change a set type. First error (no Issue Types here) → skip the pass.
 - **Close resolved** (cap 10): candidates from the anchored grep `git log -E --grep='(^|[^/A-Za-z0-9])#<N>([^0-9]|$)' --oneline`; **read the commit** before citing it. `gh issue close <N> --reason completed --comment "Done in <sha> — <one line>. — <name>"`.
 - **Close obsolete**: premise verified dead (`test -e` the path, read the doc, confirm the superseding decision). `--reason "not planned"`, signed comment. A guess is not obsolescence.
-- Leave alone: anything with a discussion, anything hand-filed unless a commit resolves it, Epics, any issue another open issue references. Stale is `/td-fly:mailbox`'s question, not yours.
+- Leave alone: the `Doc cleanup` issue (step 2 owns it), anything with a discussion, anything hand-filed unless a commit resolves it, Epics, any issue another open issue references. Stale is `/td-fly:mailbox`'s question, not yours.
 
 # 6. Report — five lines at most, then stop
 ```
