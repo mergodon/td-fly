@@ -23,6 +23,7 @@ The marketplace pulls from GitHub, and updates are version-gated. A change reach
 1. edit → 2. bump `version` in `.claude-plugin/plugin.json` → 3. commit → 4. push → 5. each box: `claude plugin update td-fly`. Left alone, auto-update (`autoUpdate` in `~/.claude/plugins/known_marketplaces.json`) writes it to disk up to ten minutes after the first message of the box's next interactive session.
 
 A running session — the one that fetched the update included — keeps the text it loaded until `/reload-plugins`. `/td-fly:close` says so on its first line when the running and installed versions differ.
+
 Frontmatter trap: `when_to_use` must be ONE plain scalar — a quoted comma list is invalid YAML and silently drops the whole frontmatter; `claude plugin validate .` catches it. The installed version is in `~/.claude/plugins/installed_plugins.json`. Tag the bumping commit `vX.Y.Z`; docs-only commits do not bump.
 
 ```

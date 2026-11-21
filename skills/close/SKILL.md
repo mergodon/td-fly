@@ -22,7 +22,7 @@ Core project knowledge that constrains the code and surfaced this session: an in
 - Nothing core → skip. Transcripts and git are the archive. Memory is not yours: auto memory writes itself.
 
 # 2. Sweep — fresh eyes
-Spawn ONE subagent with no knowledge of this session. Its prompt: the absolute path `${CLAUDE_SKILL_DIR}/sweep.md`, this repo's root, and this project's auto-memory dir — the path your session context names; none named → say so, and the sweep skips its memory check. Ask for the short list the file describes.
+Spawn ONE subagent with no knowledge of this session, on Sonnet (`model: "sonnet"` — the checks are mechanical, and the session's model costs more for the same list). Its prompt: the absolute path `${CLAUDE_SKILL_DIR}/sweep.md`, this repo's root, and this project's auto-memory dir — the path your session context names; none named → say so, and the sweep skips its memory check. Ask for the short list the file describes.
 Fix the trivial inline: dead path, stale version, duplicate, a code-governing fact in memory moved to the repo doc.
 Bigger → the repo's ONE standing **doc cleanup** issue (Task, title `Doc cleanup`, a checklist body): add each finding not already on it as `- [ ]`, tick what this close fixed and what the sweep reports `done:`. None open → create it, body opening `**From:** <name>@<branch>` (needs a remote; else one report line). Every box ticked → close it, completed. It is the only issue a sweep finding ever reaches, and it skips the bar and the ceiling in 3.
 
