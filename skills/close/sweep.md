@@ -16,7 +16,7 @@ Every path, command, flag, URL, version and status line in a doc is a claim.
 - A war story: the incident instead of the rule. Git holds the incident.
 - Leftover scaffold: an empty heading, a placeholder, a "for later" section.
 - Anything a fresh session could rebuild with `ls`, `cat`, `--help`: dead weight every session pays to load. Flag for deletion, never for expansion.
-- **A `CLAUDE.md` over 200 lines** (`wc -l`) = MED, with the three longest sections named.
+- **A `CLAUDE.md` over 200 lines** (`wc -l`) = MED, with the three longest sections named and the fix: cut, or move a part-of-the-codebase section into a path-scoped `.claude/rules/` file. A repo's own size check, if it has one, wins.
 
 ## 3. Repo docs — do NOT flag
 - Obvious from the code. Generic best practice. One-off fixes. A missing section — absence is not a finding unless it cost someone something.

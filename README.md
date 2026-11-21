@@ -18,11 +18,11 @@ This folder is both the plugin and its marketplace: `.claude-plugin/marketplace.
 
 ## Deploy discipline
 
-The marketplace pulls from GitHub, and `claude plugin update` is version-gated. A change reaches a box only through all five:
+The marketplace pulls from GitHub, and updates are version-gated. A change reaches a box only through:
 
-1. edit → 2. bump `version` in `.claude-plugin/plugin.json` → 3. commit → 4. push → 5. on each box `claude plugin update td-fly`, then **restart the session**.
+1. edit → 2. bump `version` in `.claude-plugin/plugin.json` → 3. commit → 4. push → 5. the box's next session start fetches it (`autoUpdate` in `~/.claude/plugins/known_marketplaces.json`; by hand: `claude plugin update td-fly`).
 
-A running session keeps the skill text it started with; after an update it runs the old text, silently.
+A running session keeps the text it loaded until `/reload-plugins`. `/td-fly:close` says so on its first line when the running and installed versions differ.
 Frontmatter trap: `when_to_use` must be ONE plain scalar — a quoted comma list is invalid YAML and silently drops the whole frontmatter; `claude plugin validate .` catches it. The installed version is in `~/.claude/plugins/installed_plugins.json`. Tag the bumping commit `vX.Y.Z`; docs-only commits do not bump.
 
 ```
